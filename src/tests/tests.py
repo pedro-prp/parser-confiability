@@ -1,6 +1,7 @@
 import pytest
 from util import read_file, check_delimiter_valid
 from exceptions.ArquivoNaoEncontradoException import ArquivoNaoEncontradoException
+from exceptions.DelimitadorInvalidoException import DelimitadorInvalidoException
 
 
 @pytest.mark.parametrize('input', ['analysisTime.out', 'totalTime.out'])
