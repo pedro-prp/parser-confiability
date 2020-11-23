@@ -4,6 +4,6 @@ class ArquivoNaoEncontradoException(Exception):
         self.name = name
 
     def __str__(self):
-        exception = f'"Arquivo de nome "{self.name}" não existente.'
+        exception = f'Arquivo de nome "{self.name}" não existente.'
 
         return exception

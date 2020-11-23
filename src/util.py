@@ -1,16 +1,18 @@
 from exceptions.ArquivoNaoEncontradoException import ArquivoNaoEncontradoException
+from exceptions.DelimitadorInvalidoException import DelimitadorInvalidoException
 
 
 def read_file(path):
     try:
         input_data = open(path)
-
     except:
         raise ArquivoNaoEncontradoException(path)
 
     return input_data.read()
 
-# def read_file(path):
-#     f = open(path)
 
-#     return f.read()
+def check_delimiter_valid(input):
+    if len(input) == 1:
+        return True
+    else:
+        raise DelimitadorInvalidoException(input)
