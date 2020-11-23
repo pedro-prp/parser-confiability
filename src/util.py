@@ -1,4 +1,16 @@
-def read_file(path):
-    f = open(path).read()
+from exceptions.ArquivoNaoEncontradoException import ArquivoNaoEncontradoException
 
-    return f
+
+def read_file(path):
+    try:
+        input_data = open(path)
+
+    except:
+        raise ArquivoNaoEncontradoException(path)
+
+    return input_data.read()
+
+# def read_file(path):
+#     f = open(path)
+
+#     return f.read()
