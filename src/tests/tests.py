@@ -1,7 +1,10 @@
 import pytest
+from util import read_file
 
-input_files_path = ['analysisTime.out','totalTime.out']
-@pytest.mark.parametrize("input", input_files_path)
-def test_read_file_sucess():
-    readed = read_file(input)
+
+@pytest.mark.parametrize("input", ['analysisTime.out', 'totalTime.out'])
+def test_read_file_sucess(input):
+    base_path = './src/input_files/'
+    readed = read_file(base_path + input)
+
     assert readed is not None
