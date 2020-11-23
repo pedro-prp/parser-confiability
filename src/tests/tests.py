@@ -1,5 +1,5 @@
 import pytest
-from util import read_file
+from util import read_file, check_delimiter_valid
 from exceptions.ArquivoNaoEncontradoException import ArquivoNaoEncontradoException
 
 
@@ -21,6 +21,6 @@ def test_read_file_fail(input):
         assert readed
 
 
-@pytest.mark.parametrize('input', [';', '|', ',', '=', '+', '/t', '.', ':', '~'])
+@pytest.mark.parametrize('input', [';', '|', ',', '=', '+', '\t', '.', ':', '~'])
 def test_delimiter_sucess(input):
     assert check_delimiter_valid(input) is True

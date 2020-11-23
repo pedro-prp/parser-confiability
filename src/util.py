@@ -10,7 +10,9 @@ def read_file(path):
 
     return input_data.read()
 
-# def read_file(path):
-#     f = open(path)
 
-#     return f.read()
+def check_delimiter_valid(input):
+    if len(input) == 1:
+        return True
+    else:
+        return False
