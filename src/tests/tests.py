@@ -24,3 +24,10 @@ def test_read_file_fail(input):
 @pytest.mark.parametrize('input', [';', '|', ',', '=', '+', '\t', '.', ':', '~'])
 def test_delimiter_sucess(input):
     assert check_delimiter_valid(input) is True
+
+
+@pytest.mark.parametrize('input', ['<>', ';;', ':;', '??', '~^', '[]', '==='])
+def test_delimiter_fail(input):
+
+    with pytest.raises(DelimitadorInvalidoException):
+        assert check_delimiter_valid(input) is True
