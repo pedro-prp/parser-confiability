@@ -35,7 +35,7 @@ def test_delimiter_fail(input):
         check_delimiter_valid(input)
 
 
-@pytest.mark.parametrize("path, filename", [('wrong_path/nowhere/', 'out_'), ('../../', 'other_output_test')])
+@pytest.mark.parametrize("path, filename", [('wrong_path/nowhere/', 'out_'), ('./tests/mock/protected_dir', 'out.out')])
 def test_path_access(path, filename):
     with pytest.raises(EscritaNaoPermitidaException):
         output_file(path, filename)

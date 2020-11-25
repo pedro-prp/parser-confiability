@@ -1,5 +1,6 @@
 from exceptions.ArquivoNaoEncontradoException import ArquivoNaoEncontradoException
 from exceptions.DelimitadorInvalidoException import DelimitadorInvalidoException
+from exceptions.EscritaNaoPermitidaException import EscritaNaoPermitidaException
 
 
 def read_file(path):
@@ -18,4 +19,7 @@ def check_delimiter_valid(input):
         raise DelimitadorInvalidoException(input)
 
 def output_file(out_path, filename):
-    pass
+    try:
+        a = 10 / 0
+    except:
+        raise EscritaNaoPermitidaException(out_path)
