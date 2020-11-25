@@ -1,5 +1,6 @@
 import pytest
 import os
+from pathlib import Path
 from util import read_file, check_delimiter_valid, output_file
 from exceptions.ArquivoNaoEncontradoException import ArquivoNaoEncontradoException
 from exceptions.DelimitadorInvalidoException import DelimitadorInvalidoException
@@ -49,3 +50,16 @@ def test_path_access(tmp_path, path, filename):
     os.makedirs(p)
     output_file(p, filename)
     assert f.exists() is True
+
+
+@pytest.mark.parametrize("input_file, expected_out", [
+    ('analysisTimeout.out', (20,0)),
+    ('totalTime.out', (20,0))
+])
+def test_parse_file(input_file, expected_out):
+    base_path = Path(os.getcwd())
+    f = base_path / "src" / "input_files" / input_file
+    content = read_file(f)
+    evolutions = expected_out[0]
+    parsed = parse_file(content)
+    assert parsed == evolutions
