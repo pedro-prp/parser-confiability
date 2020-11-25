@@ -18,11 +18,14 @@ def check_delimiter_valid(input):
     else:
         raise DelimitadorInvalidoException(input)
 
-def output_file(out_path, filename):
+def output_file(out_path, filename, content=''):
     try:
         p = Path(out_path)
         p = p / filename
-        with p.open() as output:
-            output.write("foo_bar")
-    except:
+        if not p.exists():
+            p.touch()
+        with p.open('w') as output:
+            output.write(content)
+    except Exception as ex:
+        print(ex)
         raise EscritaNaoPermitidaException(out_path)
