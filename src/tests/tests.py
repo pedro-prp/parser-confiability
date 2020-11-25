@@ -32,10 +32,10 @@ def test_delimiter_sucess(input):
 def test_delimiter_fail(input):
 
     with pytest.raises(DelimitadorInvalidoException):
-        assert check_delimiter_valid(input) is True
+        check_delimiter_valid(input)
 
 
 @pytest.mark.parametrize("path, filename", [('wrong_path/nowhere/', 'out_'), ('../../', 'other_output_test')])
-def test_path_access(tmpdir):
+def test_path_access(path, filename):
     with pytest.raises(EscritaNaoPermitidaException):
-        assert output_file(path, filename)
+        output_file(path, filename)

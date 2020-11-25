@@ -16,3 +16,6 @@ def check_delimiter_valid(input):
         return True
     else:
         raise DelimitadorInvalidoException(input)
+
+def output_file(out_path, filename):
+    pass
