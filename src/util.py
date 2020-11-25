@@ -29,3 +29,7 @@ def output_file(out_path, filename, content=''):
     except Exception as ex:
         print(ex)
         raise EscritaNaoPermitidaException(out_path)
+
+
+def parse_file(content):
+    return 20
