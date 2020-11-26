@@ -1,11 +1,12 @@
 import pytest
 import os
 from pathlib import Path
-from util import read_file, check_delimiter_valid, output_file, parse_file
+from util import read_file, check_delimiter_valid, output_file, parse_file, build_response
 from exceptions.ArquivoNaoEncontradoException import ArquivoNaoEncontradoException
 from exceptions.DelimitadorInvalidoException import DelimitadorInvalidoException
 from exceptions.EscritaNaoPermitidaException import EscritaNaoPermitidaException
 from tests.mock.parsed_data_mock import parsed_mock
+from tests.mock.response_data_mock import analysis_mock, total_mock
 
 @pytest.mark.parametrize('input', ['analysisTime.out', 'totalTime.out'])
 def test_read_file_sucess(input):
@@ -62,3 +63,16 @@ def test_parse_file(input_file, expected_out):
     content = read_file(f)
     parsed = parse_file(content)
     assert parsed == expected_out
+
+
+@pytest.mark.parametrize("parsed_data, delimiter, direction, ftype", [
+    (parsed_mock['analysis_time'], ';', 'linhas', 'analysis'),
+    (parsed_mock['total_time'], ';', 'colunas', 'total')
+])
+def test_build_response(parsed_data, delimiter, direction, ftype):
+    res = build_response(parsed_data, delimiter, direction)
+    result_file = ftype + 'TimeTab.out'
+
+    with open(f'./src/tests/mock/{result_file}', 'r') as f:
+        mock = f.read()
+        assert mock == res
