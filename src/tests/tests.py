@@ -6,7 +6,6 @@ from exceptions.ArquivoNaoEncontradoException import ArquivoNaoEncontradoExcepti
 from exceptions.DelimitadorInvalidoException import DelimitadorInvalidoException
 from exceptions.EscritaNaoPermitidaException import EscritaNaoPermitidaException
 from tests.mock.parsed_data_mock import parsed_mock
-from tests.mock.response_data_mock import analysis_mock, total_mock
 
 @pytest.mark.parametrize('input', ['analysisTime.out', 'totalTime.out'])
 def test_read_file_sucess(input):
@@ -76,3 +75,21 @@ def test_build_response(parsed_data, delimiter, direction, ftype):
     with open(f'./src/tests/mock/{result_file}', 'r') as f:
         mock = f.read()
         assert mock == res
+
+
+@pytest.mark.parametrize("parsed_data, delimiter, direction, ftype", [
+    (parsed_mock['analysis_time'], ';', 'linhas', 'analysis'),
+    (parsed_mock['total_time'], ';', 'colunas', 'total')
+])
+def test_write_result_file(tmp_path, parsed_data, delimiter, direction, ftype):
+    res = build_response(parsed_data, delimiter, direction)
+    result_file = ftype + 'TimeTab.out'
+
+    out_path = tmp_path / "tmp"
+    out_path.mkdir()
+
+    output_file(out_path, result_file, res)
+
+    test_file = out_path / result_file
+    with test_file.open() as f:
+        assert f.read() == res
