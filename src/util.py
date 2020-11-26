@@ -46,4 +46,4 @@ def parse_file(content):
         else:
             parsed[evolution].append(int(line))
     
-    return len(parsed.keys())
+    return parsed
