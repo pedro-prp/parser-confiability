@@ -1,7 +1,9 @@
 import pytest
-from util import read_file, check_delimiter_valid
+import os
+from util import read_file, check_delimiter_valid, output_file
 from exceptions.ArquivoNaoEncontradoException import ArquivoNaoEncontradoException
 from exceptions.DelimitadorInvalidoException import DelimitadorInvalidoException
+from exceptions.EscritaNaoPermitidaException import EscritaNaoPermitidaException
 
 
 @pytest.mark.parametrize('input', ['analysisTime.out', 'totalTime.out'])
@@ -31,4 +33,19 @@ def test_delimiter_sucess(input):
 def test_delimiter_fail(input):
 
     with pytest.raises(DelimitadorInvalidoException):
-        assert check_delimiter_valid(input) is True
+        check_delimiter_valid(input)
+
+
+@pytest.mark.parametrize("path, filename", [('wrong_path/nowhere/', 'out_'), ('./tests/mock/protected_dir', 'out.out')])
+def test_path_access(path, filename):
+    with pytest.raises(EscritaNaoPermitidaException):
+        output_file(path, filename)
+
+@pytest.mark.parametrize("path, filename", [('./tests/mock', 'output.out'), ('./somewhere', 'out.out')])
+def test_path_access(tmp_path, path, filename):
+    p = tmp_path / path
+    f = p / filename
+    print(p)
+    os.makedirs(p)
+    output_file(p, filename)
+    assert f.exists() is True
