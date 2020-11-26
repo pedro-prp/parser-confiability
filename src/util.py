@@ -32,4 +32,18 @@ def output_file(out_path, filename, content=''):
 
 
 def parse_file(content):
-    return 20
+    lines = content.split('\n')
+    parsed = {}
+    evolution = 0
+
+    for line in lines:
+        if not line.isnumeric():
+            if not line:
+                break
+            
+            evolution += 1
+            parsed[evolution] = []
+        else:
+            parsed[evolution].append(int(line))
+    
+    return len(parsed.keys())
