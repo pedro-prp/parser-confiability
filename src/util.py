@@ -29,3 +29,21 @@ def output_file(out_path, filename, content=''):
     except Exception as ex:
         print(ex)
         raise EscritaNaoPermitidaException(out_path)
+
+
+def parse_file(content):
+    lines = content.split('\n')
+    parsed = {}
+    evolution = 0
+
+    for line in lines:
+        if not line.isnumeric():
+            if not line:
+                break
+            
+            evolution += 1
+            parsed[evolution] = []
+        else:
+            parsed[evolution].append(int(line))
+    
+    return parsed
