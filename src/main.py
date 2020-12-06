@@ -6,7 +6,7 @@ from util import (
     build_response,
     parse_file)
 
-from persistencia import read_file, output_file
+from persistencia import Persistencia
 
 
 if __name__ == '__main__':
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     full_output_path = out_path / filename
     print(full_output_path)
 
-    content_raw = read_file(input_path)
+    content_raw = Persistencia.read_file(input_path)
     parsed_content = parse_file(content_raw)
     response = build_response(parsed_content, delimiter, direction)
-    output_file(out_path, filename, response)
+    Persistencia.output_file(out_path, filename, response)

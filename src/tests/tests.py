@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 import os
 
-from persistencia import read_file, output_file
+from persistencia import Persistencia
 
 from exceptions.ArquivoNaoEncontradoException import (
     ArquivoNaoEncontradoException)
@@ -18,7 +18,7 @@ from exceptions.EscritaNaoPermitidaException import (
 @pytest.mark.parametrize('input', ['analysisTime.out', 'totalTime.out'])
 def test_read_file_sucess(input):
     base_path = './src/input_files/'
-    readed = read_file(base_path + input)
+    readed = Persistencia.read_file(base_path + input)
 
     assert readed is not None
 
@@ -28,7 +28,7 @@ def test_read_file_fail(input):
     base_path = './src/input_files/'
 
     with pytest.raises(ArquivoNaoEncontradoException):
-        readed = read_file(base_path + input)
+        readed = Persistencia.read_file(base_path + input)
 
         assert readed
 
@@ -48,7 +48,7 @@ def test_delimiter_fail(input):
 @pytest.mark.parametrize("path, filename", [('wrong_path/nowhere/', 'out_'), ('./tests/mock/protected_dir', 'out.out')])
 def test_path_access_fail(path, filename):
     with pytest.raises(EscritaNaoPermitidaException):
-        output_file(path, filename)
+        Persistencia.output_file(path, filename)
 
 
 @pytest.mark.parametrize("path, filename", [('./tests/mock', 'output.out'), ('./somewhere', 'out.out')])
@@ -57,7 +57,7 @@ def test_path_access(tmp_path, path, filename):
     f = p / filename
     print(p)
     os.makedirs(p)
-    output_file(p, filename)
+    Persistencia.output_file(p, filename)
     assert f.exists() is True
 
 
@@ -68,7 +68,7 @@ def test_path_access(tmp_path, path, filename):
 def test_parse_file(input_file, expected_out):
     base_path = Path(os.getcwd())
     f = base_path / "src" / "input_files" / input_file
-    content = read_file(f)
+    content = Persistencia.read_file(f)
     parsed = parse_file(content)
     assert parsed == expected_out
 
@@ -97,7 +97,7 @@ def test_write_result_file(tmp_path, parsed_data, delimiter, direction, ftype):
     out_path = tmp_path / "tmp"
     out_path.mkdir()
 
-    output_file(out_path, result_file, res)
+    Persistencia.output_file(out_path, result_file, res)
 
     test_file = out_path / result_file
     with test_file.open() as f:

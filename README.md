@@ -1,6 +1,6 @@
 # parser-confiability
 
-# Trabalho Prático 1 - TDD
+# Trabalho Prático - TDD / Refatoração
 
 ## Alunos
 
