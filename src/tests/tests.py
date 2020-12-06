@@ -1,11 +1,19 @@
+from util import check_delimiter_valid, parse_file, build_response
+from tests.mock.parsed_data_mock import parsed_mock
+from pathlib import Path
+
 import pytest
 import os
-from pathlib import Path
-from util import read_file, check_delimiter_valid, output_file, parse_file, build_response
-from exceptions.ArquivoNaoEncontradoException import ArquivoNaoEncontradoException
-from exceptions.DelimitadorInvalidoException import DelimitadorInvalidoException
-from exceptions.EscritaNaoPermitidaException import EscritaNaoPermitidaException
-from tests.mock.parsed_data_mock import parsed_mock
+
+from persistencia import read_file, output_file
+
+from exceptions.ArquivoNaoEncontradoException import (
+    ArquivoNaoEncontradoException)
+from exceptions.DelimitadorInvalidoException import (
+    DelimitadorInvalidoException)
+from exceptions.EscritaNaoPermitidaException import (
+    EscritaNaoPermitidaException)
+
 
 @pytest.mark.parametrize('input', ['analysisTime.out', 'totalTime.out'])
 def test_read_file_sucess(input):
@@ -38,9 +46,10 @@ def test_delimiter_fail(input):
 
 
 @pytest.mark.parametrize("path, filename", [('wrong_path/nowhere/', 'out_'), ('./tests/mock/protected_dir', 'out.out')])
-def test_path_access(path, filename):
+def test_path_access_fail(path, filename):
     with pytest.raises(EscritaNaoPermitidaException):
         output_file(path, filename)
+
 
 @pytest.mark.parametrize("path, filename", [('./tests/mock', 'output.out'), ('./somewhere', 'out.out')])
 def test_path_access(tmp_path, path, filename):

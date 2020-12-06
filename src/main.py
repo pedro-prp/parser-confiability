@@ -1,14 +1,22 @@
 from pathlib import Path
-from util import *
+from util import (
+    check_delimiter_valid,
+    check_file_type,
+    check_direction,
+    build_response,
+    parse_file)
+
+from persistencia import read_file, output_file
+
 
 if __name__ == '__main__':
     input_path = input('Insira caminho para o arquivo de entrada: ')
     input_path = Path(input_path).resolve()
     print(input_path)
-    
+
     ftype = input('Insira tipo de arquivo (analysis/total): ')
     check_file_type(ftype)
-    
+
     delimiter = input('Insira caractere delimitador: ')
     check_delimiter_valid(delimiter)
 
